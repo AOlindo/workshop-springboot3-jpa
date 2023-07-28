@@ -5,11 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import org.hibernate.boot.model.internal.SecondaryTableFromAnnotationSecondPass;
-
 import com.educandoweb.curso.entities.enums.OrderStatus;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +38,7 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)//Mapeia a relação com o mesmo ID.
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // Mapeia a relação com o mesmo ID.
 	private Payment payment;
 
 	public Order() {
@@ -101,6 +97,14 @@ public class Order implements Serializable {
 
 	public Set<OrderItem> getItems() {
 		return items;
+	}
+
+	public Double getTotal() {
+		double sum = 0.0;
+		for (OrderItem x : items) {
+			sum = sum + x.getSubTotal();
+		}
+		return sum;
 	}
 
 	@Override
