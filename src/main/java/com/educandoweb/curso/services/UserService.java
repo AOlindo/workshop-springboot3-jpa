@@ -11,19 +11,25 @@ import com.educandoweb.curso.repositories.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
 
-	public List<User> findAll(){//busca todos os usuários
+	public List<User> findAll() {// busca todos os usuários
 		return repository.findAll();
 	}
-	
-	public User findById(Long id) {//busca usuários por ID
+
+	public User findById(Long id) {// busca usuários por ID
 		Optional<User> obj = repository.findById(id);
 		return obj.get();
 	}
-	public User insert(User obj) {//insere um novo usuario 
+
+	public User insert(User obj) {// insere um novo usuario
 		return repository.save(obj);
 	}
+
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
+
 }
